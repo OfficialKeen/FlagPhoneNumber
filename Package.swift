@@ -44,7 +44,7 @@ let package = Package(
 )*/
 
 
-// swift-tools-version:5.7
+// swift-tools-version:5.3
 import PackageDescription
 
 let package = Package(
