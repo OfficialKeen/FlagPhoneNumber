@@ -283,7 +283,7 @@ open class FPNTextField: UITextField {
 	}*/
 	@objc open func setFlag(key: FPNOBJCCountryKey) {
 		// Menggunakan FPNOBJCCountryCodeManager untuk mendapatkan kode negara
-		if let code = FPNOBJCCountryCodeManager.getCountryCode(forKey: key), let countryCode = FPNCountryCode(rawValue: code) {
+		if let code = FPNOBJCCountryCodeManager.shared.getCountryCode(forKey: key), let countryCode = FPNCountryCode(rawValue: code) {
 			setFlag(countryCode: countryCode)
 		}
 	}

@@ -249,6 +249,7 @@ import Foundation
 }
 
 public class FPNOBJCCountryCodeManager {
+	static let shared = FPNOBJCCountryCodeManager()
     private var countryCodeMap: [FPNOBJCCountryKey: String] = [
         FPNOBJCCountryKey.AF: "AF",
 		FPNOBJCCountryKey.ZA: "ZA",
