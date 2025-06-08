@@ -275,13 +275,18 @@ open class FPNTextField: UITextField {
 	}
 
 	/// Set the country image according to country code. Example "FR"
-	@objc open func setFlag(key: FPNOBJCCountryKey) {
+	/*@objc open func setFlag(key: FPNOBJCCountryKey) {
 		if let code = FPNOBJCCountryCode[key], let countryCode = FPNCountryCode(rawValue: code) {
 
 			setFlag(countryCode: countryCode)
 		}
+	}*/
+	@objc open func setFlag(key: FPNOBJCCountryKey) {
+		// Menggunakan FPNOBJCCountryCodeManager untuk mendapatkan kode negara
+		if let code = FPNOBJCCountryCodeManager.getCountryCode(forKey: key), let countryCode = FPNCountryCode(rawValue: code) {
+			setFlag(countryCode: countryCode)
+		}
 	}
-
 	/// Set the country list excluding the provided countries
 	open func setCountries(excluding countries: [FPNCountryCode]) {
 		countryRepository.setup(without: countries)
