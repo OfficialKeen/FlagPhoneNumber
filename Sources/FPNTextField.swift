@@ -10,6 +10,7 @@ import UIKit
 
 open class FPNTextField: UITextField {
 
+	public let FPNOBJCCountryCodeManagerInstance = FPNOBJCCountryCodeManager()
 	/// The size of the flag button
 	@objc open var flagButtonSize: CGSize = CGSize(width: 32, height: 32) {
 		didSet {
@@ -283,7 +284,7 @@ open class FPNTextField: UITextField {
 	}*/
 	@objc open func setFlag(key: FPNOBJCCountryKey) {
 		// Menggunakan FPNOBJCCountryCodeManager untuk mendapatkan kode negara
-		if let code = FPNOBJCCountryCodeManager.getCountryCode(forKey: key), let countryCode = FPNCountryCode(rawValue: code) {
+		if let code = FPNOBJCCountryCodeManagerInstance.getCountryCode(forKey: key), let countryCode = FPNCountryCode(rawValue: code) {
 			setFlag(countryCode: countryCode)
 		}
 	}
