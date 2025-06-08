@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import libPhoneNumber
 
 open class FPNTextField: UITextField {
 
@@ -313,7 +314,7 @@ open class FPNTextField: UITextField {
 	/// Set the country list excluding the provided countries
 	@objc open func setCountries(excluding countries: [Int]) {
 		let countryCodes: [FPNCountryCode] = countries.compactMap({ index in
-			if let key = FPNOBJCCountryKey(rawValue: index), let code = FPNOBJCCountryCode[key], let countryCode = FPNCountryCode(rawValue: code) {
+			if let key = FPNOBJCCountryKey(rawValue: index), let code = FPNOBJCCountryCodeManagerInstance.getCountryCode(forKey: key), let countryCode = FPNCountryCode(rawValue: code) {
 				return countryCode
 			}
 			return nil
@@ -325,7 +326,7 @@ open class FPNTextField: UITextField {
 	/// Set the country list including the provided countries
 	@objc open func setCountries(including countries: [Int]) {
 		let countryCodes: [FPNCountryCode] = countries.compactMap({ index in
-			if let key = FPNOBJCCountryKey(rawValue: index), let code = FPNOBJCCountryCode[key], let countryCode = FPNCountryCode(rawValue: code) {
+			if let key = FPNOBJCCountryKey(rawValue: index), let code = FPNOBJCCountryCodeManagerInstance.getCountryCode(forKey: key), let countryCode = FPNCountryCode(rawValue: code) {
 				return countryCode
 			}
 			return nil
