@@ -19,7 +19,7 @@ open class FPNCountryRepository {
 	}
 
 	// Populates the metadata from the included json file resource
-	private func getAllCountries() -> [FPNCountry] {
+	/*private func getAllCountries() -> [FPNCountry] {
 		let bundle: Bundle = Bundle.FlagPhoneNumber()
 		let resource: String = "countryCodes"
 		let jsonPath = bundle.path(forResource: resource, ofType: "json")
@@ -50,8 +50,39 @@ open class FPNCountryRepository {
 			assertionFailure(error.localizedDescription)
 		}
 		return countries.sorted(by: { $0.name.localizedCaseInsensitiveCompare($1.name) == ComparisonResult.orderedAscending })
-	}
+	}*/
 
+	private func getAllCountries() -> [FPNCountry] {
+		let bundle = Bundle(for: FPNCountryRepository.self)
+		guard let jsonPath = bundle.path(forResource: "countryCodes", ofType: "json") else {
+			fatalError("Resource file is not found in the Bundle")
+		}
+
+		guard let jsonData = try? Data(contentsOf: URL(fileURLWithPath: jsonPath)) else {
+			fatalError("Failed to load JSON data")
+		}
+
+		var countries = [FPNCountry]()
+
+		do {
+			if let jsonObjects = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [[String: Any]] {
+				for jsonObject in jsonObjects {
+					guard let code = jsonObject["code"] as? String,
+						let phoneCode = jsonObject["dial_code"] as? String,
+						let name = jsonObject["name"] as? String else {
+						continue
+					}
+
+					let country = FPNCountry(code: code, name: locale.localizedString(forRegionCode: code) ?? name, phoneCode: phoneCode)
+					countries.append(country)
+				}
+			}
+		} catch let error {
+			assertionFailure("Failed to parse JSON: \(error.localizedDescription)")
+		}
+
+		return countries.sorted(by: { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending })
+	}
 	private func getAllCountries(excluding countryCodes: [FPNCountryCode]) -> [FPNCountry] {
 		var allCountries = getAllCountries()
 
