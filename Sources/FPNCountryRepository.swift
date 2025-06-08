@@ -21,7 +21,7 @@ open class FPNCountryRepository {
 	// Populates the metadata from the included json file resource
 	private func getAllCountries() -> [FPNCountry] {
 		let bundle: Bundle = Bundle.FlagPhoneNumber()
-		let resource: String = "countryCodes"
+		let resource: String = "*/countryCodes"
 		let jsonPath = bundle.path(forResource: resource, ofType: "json")
 
 		assert(jsonPath != nil, "Resource file is not found in the Bundle")
